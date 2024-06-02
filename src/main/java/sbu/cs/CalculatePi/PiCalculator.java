@@ -9,36 +9,40 @@ import java.util.concurrent.TimeUnit;
 public class PiCalculator {
 
     private static BigDecimal pi = new BigDecimal("0");
+    private static boolean calculated = false;
 
     private static class BBPAlgorithm implements Runnable {
 
-        private final int startPoint;
-        private final MathContext mc = new MathContext(1001);
+        private final int start;
+        private final MathContext mc = new MathContext(2000);
 
-        public BBPAlgorithm(int startPoint) {
-            this.startPoint = startPoint;
+        public BBPAlgorithm(int s) {
+            this.start = s;
         }
+
         @Override
         public void run() {
-            BigDecimal sum = new BigDecimal("0");
-            for (int i = startPoint; i < startPoint + 50; i++) {
-                BigDecimal a = new BigDecimal("0.0625").pow(i);
-                BigDecimal b = new BigDecimal("4").divide(new BigDecimal((8*i+1)), mc);
-                BigDecimal c = new BigDecimal("-2").divide(new BigDecimal((8*i+4)), mc);
-                BigDecimal d = new BigDecimal("-1").divide(new BigDecimal((8*i+5)), mc);
-                BigDecimal e = new BigDecimal("-1").divide(new BigDecimal((8*i+6)), mc);
-                sum = sum.add(a.multiply(b.add(c, mc).add(d).add(e), mc));
+            if (!calculated) {
+                BigDecimal sum = new BigDecimal("0");
+                for (int i = start; i < start + 50; i++) {
+                    BigDecimal d1 = new BigDecimal("0.0625").pow(i);
+                    BigDecimal d2 = new BigDecimal("4").divide(new BigDecimal((8 * i + 1)), mc);
+                    BigDecimal d3 = new BigDecimal("-2").divide(new BigDecimal((8 * i + 4)), mc);
+                    BigDecimal d4 = new BigDecimal("-1").divide(new BigDecimal((8 * i + 5)), mc);
+                    BigDecimal d5 = new BigDecimal("-1").divide(new BigDecimal((8 * i + 6)), mc);
+                    sum = sum.add(d1.multiply(d2.add(d3, mc).add(d4).add(d5), mc));
+                }
+                Sum(sum);
             }
-            Sum(sum);
         }
 
         private static synchronized void Sum(BigDecimal n) {
             pi = pi.add(n);
+            calculated = true;
         }
     }
 
-    public String calculate(int floatingPoint)
-    {
+    public String calculate(int floatingPoint) {
         ExecutorService pool = Executors.newCachedThreadPool();
 
         for (int i = 0; i < 20; i++) {
@@ -56,7 +60,6 @@ public class PiCalculator {
     }
 
     public static void main(String[] args) {
-        PiCalculator pi = new PiCalculator();
-        System.out.println(pi.calculate(2));
+
     }
 }
