@@ -13,7 +13,7 @@
 5. [Challenges and Solutions](#challenges-and-solutions)
 6. [Semaphore](#semaphore)
 
-[All References and Resources](#)
+[All References and Resources](#all-references-and-resources)
 # Pi Calculator
 ## Intro
 To calculate the value of π using multithreading in Java for improved accuracy and performance, I researched and
