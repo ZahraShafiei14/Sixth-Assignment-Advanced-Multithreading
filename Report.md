@@ -80,7 +80,7 @@ One of the main challenges I faced was passing the final test case, which requir
 To address this, I **increased** the `MathContext (mc)` to ensure sufficient precision during the calculations.
 >_This adjustment allowed the algorithm to converge more accurately and pass the test case successfully._
 
-Additionally, to prevent redundant calculations or additions of partial sums, I introduced a boolean flag (calculated)
+Additionally, to prevent redundant calculations or additions of partial sums, I introduced a boolean flag `calculated`
 to track whether the calculation has already been performed or added.
 > _This flag ensures that the calculation is only 
 performed once, even in a multithreaded environment, avoiding unnecessary computations and ensuring accuracy._
